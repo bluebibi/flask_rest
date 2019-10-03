@@ -9,7 +9,7 @@ selection_resource_by_sensor_id = """
 """
 
 selection_resource_by_location = """
-    SELECT * FROM TEMPERATURE WHERE location LIKE CONCAT('%', ?, '%')
+    SELECT * FROM TEMPERATURE WHERE location LIKE ?
 """
 
 update_resource_by_sensor_id = """
@@ -70,7 +70,7 @@ class TemperatureResourceDatabase:
     def readByLocation(self, location):
         cur = self.conn.cursor()
         cur.execute(
-            selection_resource_by_location, (location,)
+            selection_resource_by_location, ('%' + location + '%',)
         )
         row = cur.fetchone()
         temperature = {

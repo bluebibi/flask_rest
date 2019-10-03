@@ -2,7 +2,7 @@ import requests
 
 if __name__ == "__main__":
     res = requests.post(
-        url='http://127.0.0.1:5000/resource_creation',
+        url='http://127.0.0.1:5000/resource/creation',
         data={
             'sensor_id': 't4',
             'temperature': 33.0,

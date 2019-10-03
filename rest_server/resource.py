@@ -1,5 +1,6 @@
 from flask_restful import Resource, abort, reqparse
-from database.resource_db import TemperatureResourceDatabase
+
+from database.resource_db_access import TemperatureResourceDatabase
 
 
 class TemperatureResource(Resource):
@@ -63,3 +64,19 @@ class TemperatureCreationResource(Resource):
                 location=args['location']
             )
             return {"sensor_id": sensor_id}, 201
+
+
+class TemperatureByLocationResource(Resource):
+    def __init__(self):
+        self.temperature_resource_db = TemperatureResourceDatabase()
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument('temperature')
+        self.parser.add_argument('datetime')
+        self.parser.add_argument('location')
+
+    def get(self, location):
+        temperature = self.temperature_resource_db.readByLocation(location=location)
+        if temperature is None:
+            abort(404, message="The sensor where the location includes {0} doesn't exist".format(location))
+        else:
+            return temperature, 200
