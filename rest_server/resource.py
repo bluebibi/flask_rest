@@ -1,0 +1,65 @@
+from flask_restful import Resource, abort, reqparse
+from database.resource_db import TemperatureResourceDatabase
+
+
+class TemperatureResource(Resource):
+    def __init__(self):
+        self.temperature_resource_db = TemperatureResourceDatabase()
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument('temperature')
+        self.parser.add_argument('datetime')
+        self.parser.add_argument('location')
+
+    def get(self, sensor_id):
+        temperature = self.temperature_resource_db.readBySensorId(sensor_id=sensor_id)
+        if temperature is None:
+            abort(404, message="Sensor id {0} doesn't exist".format(sensor_id))
+        else:
+            return temperature, 200
+
+    def put(self, sensor_id):
+        args = self.parser.parse_args()
+        temperature = self.temperature_resource_db.readBySensorId(sensor_id=sensor_id)
+        if temperature is None:
+            abort(404, message="Error! Sensor id {0} doesn't exist".format(sensor_id))
+        else:
+            self.temperature_resource_db.update(
+                sensor_id=sensor_id,
+                temperature=args['temperature'],
+                datetime=args['datetime'],
+                location=args['location']
+            )
+            return {"sensor_id": sensor_id}, 200
+
+    def delete(self, sensor_id):
+        temperature = self.temperature_resource_db.readBySensorId(sensor_id=sensor_id)
+        if temperature is None:
+            abort(404, message="Error! Sensor id {0} doesn't exist".format(sensor_id))
+        else:
+            self.temperature_resource_db.delete(sensor_id=sensor_id)
+            return {"sensor_id": sensor_id}, 204
+
+
+class TemperatureCreationResource(Resource):
+    def __init__(self):
+        self.temperature_resource_db = TemperatureResourceDatabase()
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument('sensor_id')
+        self.parser.add_argument('temperature')
+        self.parser.add_argument('datetime')
+        self.parser.add_argument('location')
+
+    def post(self):
+        args = self.parser.parse_args()
+        sensor_id = args['sensor_id']
+        temperature = self.temperature_resource_db.readBySensorId(sensor_id=sensor_id)
+        if temperature is not None:
+            abort(409, message="Error! Sensor id {0} already exist".format(sensor_id))
+        else:
+            self.temperature_resource_db.crate(
+                sensor_id=sensor_id,
+                temperature=args['temperature'],
+                datetime=args['datetime'],
+                location=args['location']
+            )
+            return {"sensor_id": sensor_id}, 201
