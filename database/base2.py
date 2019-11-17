@@ -46,34 +46,34 @@ def print_all_customers(customers):
 
 
 Base.metadata.create_all(engine)
-Session = sessionmaker(bind=engine)
-session = Session()
+db_session = sessionmaker(bind=engine)
+db_session = db_session()
 
 
 def main():
-    invoice_count = session.query(Invoice).count()
-    customer_count = session.query(Customer).count()
+    invoice_count = db_session.query(Invoice).count()
+    customer_count = db_session.query(Customer).count()
     print("### There are {0} rows and {1} rows in the 'Invoice' and 'Customer' table after performing 'delete'.".format(
         invoice_count, customer_count
     ))
 
     if customer_count != 0 and invoice_count != 0:
-        session.query(Invoice).delete()
-        session.query(Customer).delete()
-        invoice_count = session.query(Invoice).count()
-        customer_count = session.query(Customer).count()
+        db_session.query(Invoice).delete()
+        db_session.query(Customer).delete()
+        invoice_count = db_session.query(Invoice).count()
+        customer_count = db_session.query(Customer).count()
         print("### There are {0} rows and {1} rows in the 'Invoice' and 'Customer' table after performing 'delete'.".format(
             invoice_count, customer_count
         ))
 
     ## INSERT (POST)
-    print("\n### session.add()")
+    print("\n### db_session.add()")
     customer = Customer(name='김철수', address='서울 송파구', email='cskim@gmail.com', age=20)
     customer.invoices = [Invoice(invoice_no=10, amount=15000), Invoice(invoice_no=14, amount=3850)]
-    session.add(customer)
-    session.commit()
+    db_session.add(customer)
+    db_session.commit()
 
-    print("### session.add_all()")
+    print("### db_session.add_all()")
     customers = [
         Customer(
             name='이나라', address='대전 유성구', email='nrlee@gmail.com', age=21,
@@ -84,23 +84,23 @@ def main():
             invoices=[Invoice(invoice_no=9, amount=15000), Invoice(invoice_no=11, amount=6000)]
         )
     ]
-    session.add_all(customers)
-    session.commit()
+    db_session.add_all(customers)
+    db_session.commit()
 
-    invoice_count = session.query(Invoice).count()
-    customer_count = session.query(Customer).count()
+    invoice_count = db_session.query(Invoice).count()
+    customer_count = db_session.query(Customer).count()
     print("### There are {0} rows and {1} rows in the 'Invoice' and 'Customer' table after performing 'delete'.".format(
         invoice_count, customer_count
     ))
 
 
     ## JOIN SELECT (GET)
-    print("\n### session.query(Customer).all()")
-    customers = session.query(Customer).all()
+    print("\n### db_session.query(Customer).all()")
+    customers = db_session.query(Customer).all()
     print_all_customers(customers)
 
-    print("\n### session.query(Customer, Invoice).join(Invoice).filter(Invoice.amount == 6000).all()")
-    for customer, invoice in session.query(Customer, Invoice).join(Invoice).filter(Invoice.amount == 6000).all():
+    print("\n### db_session.query(Customer, Invoice).join(Invoice).filter(Invoice.amount == 6000).all()")
+    for customer, invoice in db_session.query(Customer, Invoice).join(Invoice).filter(Invoice.amount == 6000).all():
         print(customer)
         print(invoice)
 

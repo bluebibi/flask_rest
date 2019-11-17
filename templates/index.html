@@ -1,121 +1,12 @@
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Bootstrap 4</title>
-    <link rel="stylesheet"
-          href="static/css/bootstrap.min.css"
-          crossorigin="anonymous"
-    >
-    <style>
-      p { margin:20px 0px; }
-    </style>
-  </head>
-  <body>
-    <div class="container-fluid border border-warning">
-      <div class="row">
-        <div class="col-sm-3 text-center">
-          <h1>자바</h1>
-        </div>
-        <div class="col-sm-3 text-center">
-          <h1>파이썬</h1>
-        </div>
-        <div class="col-sm-3 text-center">
-          <h1 data-toggle="tooltip" data-placement="bottom" title="애플 언어">스위프트</h1>
-        </div>
-        <div class="col-sm-3 text-center">
-          <h1 data-toggle="tooltip" data-placement="bottom" title="GO">GO</h1>
-        </div>
-      </div>
-    </div>
+{% extends "base.html" %}
+{% block title %} Auto Trade {% endblock %}
 
-    <div class="container">
-      <div class="row">
-        <div class="col-6">
-          <p>Card</p>
-          <div class="card text-dark bg-light">
-            <div class="row no-gutters">
-              <div class="col-4">
-                <img src="https://publicdomainvectors.org/photos/Red-Apple.png" alt="" class="card-img" />
-              </div>
-              <div class="col-8">
-                <div class="card-body">
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam egestas sed sem ut malesuada.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-6">
-          <p>Card</p>
-          <div class="card">
-            <div class="card-header">
-              My Card
-            </div>
-            <img src="https://publicdomainvectors.org/photos/Red-Apple.png"
-                 alt=""
-                 class="card-img-bottom align-self-center"
-                 style="width: 30%"
-            />
-            <div class="card-body">
-              <h5 class="card-title">Lorem</h5>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam egestas sed sem ut malesuada.</p>
-              <a href="#" class="btn btn-primary">More</a>
-            </div>
-          </div>
-        </div>
-      </div>
+{% block body %}
 
-      <div class="row">
-        <div class="col-sm-4 text-center">
-          <div class="card-body">
+{% endblock %}
 
-            <img src="https://publicdomainvectors.org/photos/Red-Apple.png"
-                 class="card-img"
-                 style="width: 30%"/>
+{% block additional_javascript %}
+<script type="text/javascript">
 
-            <h5 class="card-title">Flask</h5>
-            <p class="card-text">
-              Flask는 웹사이트 및 웹서비스를 만들기 위한 마이크로프레임워크입니다.
-              더 자세한 내용을 원하시면 아래 버튼을 클릭하세요.
-            </p>
-            <a href="#" class="btn btn-primary btn-sm">More...</a>
-          </div>
-        </div>
-        <div class="col-sm-4 text-center">
-          <h1>파이썬</h1>
-        </div>
-        <div class="col-sm-4 text-center">
-          <h1 data-toggle="tooltip" data-placement="bottom" title="애플 언어">스위프트</h1>
-        </div>
-      </div>
-    </div>
-
-    <div class="container-fluid border border-warning">
-      <div class="row">
-        <div class="col-sm-3 text-center">
-          <h1>자바</h1>
-        </div>
-        <div class="col-sm-3 text-center">
-          <h1>파이썬</h1>
-        </div>
-        <div class="col-sm-3 text-center">
-          <h1 data-toggle="tooltip" data-placement="bottom" title="애플 언어">스위프트</h1>
-        </div>
-        <div class="col-sm-3 text-center">
-          <h1 data-toggle="tooltip" data-placement="bottom" title="GO">GO</h1>
-        </div>
-      </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
-    <script src="/static/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <script>
-      $(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-      });
-    </script>
-  </body>
-</html>
+</script>
+{% endblock %}
