@@ -82,13 +82,17 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-end">
                     <div class="navbar-nav">
-                        {% if login_user %}
-                            {{ login_user.name }} &nbsp;
-                            <a href="/auth/logout">LOGOUT</a>
+                        {% if current_user.is_authenticated %}
+                            안녕하세요. {{ current_user.name }} 회원님! &nbsp;
+                            <a href="/auth/my_page">나의 정보</a>
+                            &nbsp;&nbsp;
+                            <a href="/auth/logout">로그아웃</a>
                         {% else %}
-                            <a href="/auth/login">LOGIN</a>
+                            <a href="/auth/login">로그인</a>
+                            &nbsp;&nbsp;
+                            <a href="/auth/signup">회원가입</a>
                         {% endif %}
-                        <i class="material-icons">filter_center_focus</i>
+
                         <span id="total_gain">
 
                         </span>

@@ -12,7 +12,6 @@ from views.auth import auth_blueprint
 from rest_server.resource_check import resource_blueprint
 from rest_server.resource import TemperatureResource, TemperatureCreationResource, TemperatureByLocationResource
 
-from flask_login import current_user
 from flask_login import current_user, LoginManager
 
 application = Flask(__name__)
@@ -52,16 +51,13 @@ def load_user(user_id):
 def hello_html():
     value = 50
     value_list = ['파이썬', '자바', '스위프트']
-    login_user = None
-    if 'user' in session:
-        login_user = session['user']
 
     return render_template(
         'index.html',
         name="yhhan",
         value_list=value_list,
         value=value,
-        login_user=login_user
+        current_user=current_user
     )
 
 

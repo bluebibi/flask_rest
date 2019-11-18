@@ -10,7 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 print(sqlalchemy.__version__)
 
-engine = create_engine('sqlite:///customers.db', echo=False)
+engine = create_engine('sqlite:///database/customers.db', echo=False, connect_args={'check_same_thread': False})
 Base = declarative_base()
 
 
@@ -103,7 +103,6 @@ db_session = db_session()
 user_email = "hong@gmail.com"
 q = db_session.query(User).filter(User.email == user_email)
 user = q.first()
-print(user)
 if user is None:
     user = User(name="홍길동", email=user_email, affiliation="KOREATECH")
     user.set_password("1234")
