@@ -136,13 +136,12 @@ def kakao_logout():
         headers=headers
     )
 
-    kakao_oauth["kaccount_email"] = None
-    kakao_oauth["id"] = None
-    kakao_oauth["kakao_profile_image"] = None
-    kakao_oauth["nickname"] = None
-    kakao_oauth["kakao_thumbnail_image"] = None
-
-    print(response.status_code)
+    if response.status_code == 200:
+        kakao_oauth["kaccount_email"] = None
+        kakao_oauth["id"] = None
+        kakao_oauth["kakao_profile_image"] = None
+        kakao_oauth["nickname"] = None
+        kakao_oauth["kakao_thumbnail_image"] = None
 
 
 @auth_blueprint.route("/logout")
