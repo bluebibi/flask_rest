@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %} 회원 정보 {% endblock %}
+
+{% block body %}
+<div class="text-center">
+    <h3 class="text-center">회원 정보</h3>
+</div>
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning text-center">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ message }}
+</div>
+{% endfor %}
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <dl>
+                {% for field in form.display %}
+                    <dt>{{ form[field].label }}</dt>
+                    <dd>{{ form[field](size=62, value=user[field]) }}</dd>
+                    {% if form[field].errors %}
+                      {% for e in form[field].errors %}
+                       <p class="help-block">{{ e }}</p>
+                      {% endfor %}
+                    {% endif %}
+                    <br/>
+                {% endfor %}
+            </dl>
+            <p>
+            <input type=submit value="수정">
+        </form>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+<br/>
+<br/>
+<br/>
+{% endblock %}

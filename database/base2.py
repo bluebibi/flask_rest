@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker, relationship
 
 print(sqlalchemy.__version__)
 
-engine = create_engine('sqlite:///customers2.db', echo=False)
+engine = create_engine('sqlite:///database/customers.db', echo=False)
 Base = declarative_base()
 
 
