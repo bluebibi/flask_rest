@@ -28,6 +28,30 @@
                     {% endif %}
                     <br/>
                 {% endfor %}
+
+                {% if 'nickname' in kakao_oauth %}
+                    <dt><label>카카오 닉네임</label></dt>
+                    <dd>{{ kakao_oauth['nickname'] }}</dd>
+                    <br/>
+                {%  endif %}
+
+                {% if 'id' in kakao_oauth %}
+                    <dt><label>카카오 아이디</label></dt>
+                    <dd>{{ kakao_oauth['id'] }}</dd>
+                    <br/>
+                {%  endif %}
+
+                {% if 'kakao_thumbnail_image' in kakao_oauth %}
+                    <dt><label>카카오 썸네일 이미지</label></dt>
+                    <dd><img src="{{ kakao_oauth['kakao_thumbnail_image'] }}" border="0"/></dd>
+                    <br/>
+                {%  endif %}
+
+                {% if 'kakao_profile_image' in kakao_oauth %}
+                    <dt><label>카카오 프로파일 이미지</label></dt>
+                    <dd><img src="{{ kakao_oauth['kakao_profile_image'] }}" border="0"/></dd>
+                    <br/>
+                {%  endif %}
             </dl>
             <p>
             <input type=submit value="수정">

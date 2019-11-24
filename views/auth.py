@@ -28,7 +28,7 @@ def _user():
             flash('귀하의 회원정보가 수정 되었습니다.')
             return redirect('/auth/my_page')
 
-    return render_template("my_page.html", user=user, form=form)
+    return render_template("my_page.html", user=user, form=form, kakao_oauth=kakao_oauth)
 
 
 def login_process(email, password):
@@ -66,33 +66,32 @@ def login():
 
 @auth_blueprint.route('kakao_oauth_redirect')
 def kakao_oauth_redirect():
-    if "access_token" not in kakao_oauth:
-        code = str(request.args.get('code'))
-        url = "https://kauth.kakao.com/oauth/token"
-        data = "grant_type=authorization_code" \
-                "&client_id=0eb67d9cd0372c01d3915bbd934b4f6d" \
-                "&redirect_uri=http://localhost:8080/auth/kakao_oauth_redirect" \
-                "&code={0}".format(code)
-        headers = {
-            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-            "Cache-Control": "no-cache"
-        }
-        response = requests.post(
-            url=url,
-            data=data,
-            headers=headers
-        )
+    code = str(request.args.get('code'))
+    url = "https://kauth.kakao.com/oauth/token"
+    data = "grant_type=authorization_code" \
+            "&client_id=0eb67d9cd0372c01d3915bbd934b4f6d" \
+            "&redirect_uri=http://localhost:8080/auth/kakao_oauth_redirect" \
+            "&code={0}".format(code)
+    headers = {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+        "Cache-Control": "no-cache"
+    }
+    response = requests.post(
+        url=url,
+        data=data,
+        headers=headers
+    )
 
-        #print("kakao_oauth_redirect", response.json())
+    #print("kakao_oauth_redirect", response.json())
 
-        kakao_oauth["access_token"] = response.json()["access_token"]
-        kakao_oauth["expires_in"] = response.json()["expires_in"]
-        kakao_oauth["refresh_token"] = response.json()["refresh_token"]
-        kakao_oauth["refresh_token_expires_in"] = response.json()["refresh_token_expires_in"]
-        kakao_oauth["scope"] = response.json()["scope"]
-        kakao_oauth["token_type"] = response.json()["token_type"]
+    kakao_oauth["access_token"] = response.json()["access_token"]
+    kakao_oauth["expires_in"] = response.json()["expires_in"]
+    kakao_oauth["refresh_token"] = response.json()["refresh_token"]
+    kakao_oauth["refresh_token_expires_in"] = response.json()["refresh_token_expires_in"]
+    kakao_oauth["scope"] = response.json()["scope"]
+    kakao_oauth["token_type"] = response.json()["token_type"]
 
-    if "kaccount_email" not in kakao_oauth:
+    if "kaccount_email" not in kakao_oauth or kakao_oauth['kaccount_email'] is None:
         kakao_me_and_signup()
 
     redirect_url = login_process(kakao_oauth["kaccount_email"], "1234")
