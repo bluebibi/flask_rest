@@ -10,7 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 print(sqlalchemy.__version__)
 
-engine = create_engine('sqlite:///customers.db', echo=False)
+engine = create_engine('sqlite:///database/customers.db?check_same_thread=False', echo=False)
 Base = declarative_base()
 
 
